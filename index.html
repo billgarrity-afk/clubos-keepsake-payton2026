@@ -27,17 +27,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--gd);color:var(--cream);ov
 /* BLUR BACKGROUND — fills screen edge to edge */
 .sblur{
   position:absolute;inset:-20px;
-  background-size:cover;background-position:center;
+  background-size:cover;
   filter:blur(24px) brightness(0.35);
   transform:scale(1.05);
 }
 
-/* MAIN PHOTO — contained, no crop, Ken Burns */
+/* MAIN PHOTO — cover, top-anchored so faces show */
 .simg{
   position:absolute;inset:0;
-  background-size:contain;
-  background-position:center;
-  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center 15%;
 }
 
 /* Ken Burns — very subtle zoom so contain stays contained */
