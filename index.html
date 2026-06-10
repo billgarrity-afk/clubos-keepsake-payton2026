@@ -6,84 +6,162 @@
 <title>Payton Garrity — Class of 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
-:root{--gd:#0E1F14;--gm:#1A3520;--ga:#2E7044;--gold:#D4A843;--cream:#F5EDD8;--cdim:rgba(245,237,216,0.65);--sep:rgba(212,168,67,0.2);}
+:root{
+  --gd:#0E1F14;--gm:#1A3520;--ga:#2E7044;
+  --gold:#D4A843;--cream:#F5EDD8;--cdim:rgba(245,237,216,0.65);--sep:rgba(212,168,67,0.2);
+}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{font-family:'DM Sans',sans-serif;background:var(--gd);color:var(--cream);overflow-x:hidden;max-width:100vw;}
+body{font-family:'DM Sans',sans-serif;background:#000;color:var(--cream);overflow-x:hidden;}
 
-.loader{position:fixed;inset:0;background:var(--gd);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity 0.6s ease;}
-.loader.hidden{opacity:0;pointer-events:none;}
-.loader-ring{width:48px;height:48px;border:3px solid rgba(212,168,67,0.15);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loader-text{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(212,168,67,0.5);}
-.loader-name{font-family:'Cormorant Garamond',serif;font-size:22px;color:rgba(245,237,216,0.4);margin-top:4px;}
+/* ── LOADER ── */
+.loader{position:fixed;inset:0;background:var(--gd);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity 0.5s;}
+.loader.gone{opacity:0;pointer-events:none;}
+.ring{width:44px;height:44px;border:3px solid rgba(212,168,67,0.15);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loader-name{font-family:'Cormorant Garamond',serif;font-size:20px;color:rgba(245,237,216,0.5);}
+.loader-sub{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(212,168,67,0.4);}
 
-.slideshow{position:relative;width:100%;height:100svh;overflow:hidden;background:#000;}
-.slide{position:absolute;inset:0;opacity:0;transition:opacity 1s ease;pointer-events:none;overflow:hidden;}
+/* ── SLIDESHOW ── */
+.ss{position:relative;width:100%;height:100svh;background:#000;overflow:hidden;}
+
+.slide{
+  position:absolute;inset:0;
+  opacity:0;
+  transition:opacity 0.5s ease;
+  pointer-events:none;
+}
 .slide.active{opacity:1;pointer-events:all;}
 
-/* Blur fill — covers full background */
-.sblur{position:absolute;inset:-20px;background-size:cover;background-position:center;filter:blur(22px) brightness(0.32);transform:scale(1.05);}
-
-/* IMG — respects EXIF rotation, covers screen, top-anchored */
+/* THE PHOTO — img tag handles EXIF rotation correctly */
 .simg{
   position:absolute;inset:0;
-  width:100%;height:100%;
-  object-fit:contain;
-  object-position:center;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 25%;
   display:block;
 }
 
-.svignette{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,20,12,0.75) 0%,rgba(10,20,12,0.0) 35%,transparent 52%),linear-gradient(to bottom,rgba(10,20,12,0.45) 0%,transparent 22%);z-index:2;pointer-events:none;}
-.scaption{position:absolute;bottom:0;left:0;right:0;padding:20px 24px 54px;z-index:3;}
-.sname{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold);font-weight:500;letter-spacing:0.5px;margin-bottom:4px;text-shadow:0 1px 8px rgba(0,0,0,0.95),0 2px 20px rgba(0,0,0,0.8);}
-.scap{font-family:'Caveat',cursive;font-size:25px;color:#fff;line-height:1.3;max-width:88%;text-shadow:0 1px 10px rgba(0,0,0,0.98),0 2px 24px rgba(0,0,0,0.85);}
-.shdr{position:absolute;top:0;left:0;right:0;padding:18px 22px;z-index:3;display:flex;justify-content:space-between;align-items:flex-start;background:linear-gradient(to bottom,rgba(10,20,12,0.55) 0%,transparent 100%);}
-.shdr .school{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,237,216,0.85);font-weight:600;text-shadow:0 1px 6px rgba(0,0,0,0.9);}
-.shdr .htitle{font-family:'Cormorant Garamond',serif;font-size:17px;color:rgba(245,237,216,0.9);margin-top:2px;text-shadow:0 1px 8px rgba(0,0,0,0.9);}
-.sctr{font-family:'DM Mono',monospace;font-size:10px;color:rgba(245,237,216,0.8);letter-spacing:2px;text-shadow:0 1px 6px rgba(0,0,0,0.9);white-space:nowrap;}
-.dl-btn{position:absolute;bottom:54px;right:18px;z-index:4;background:rgba(10,20,12,0.6);border:1px solid rgba(212,168,67,0.4);color:var(--gold);padding:7px 14px;border-radius:20px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;text-decoration:none;backdrop-filter:blur(6px);opacity:0;transition:opacity 0.3s;font-family:'DM Sans',sans-serif;}
-.slide.active .dl-btn{opacity:1;}
-.nav-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:4;background:rgba(10,20,12,0.4);border:1px solid rgba(212,168,67,0.25);color:var(--gold);width:42px;height:42px;border-radius:50%;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
-.nav-btn:active{background:rgba(212,168,67,0.2);}
-.nav-prev{left:14px;}.nav-next{right:14px;}
-.dots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:4px;z-index:4;flex-wrap:wrap;justify-content:center;max-width:80vw;}
-.dot{width:5px;height:5px;border-radius:50%;background:rgba(245,237,216,0.22);cursor:pointer;transition:all 0.3s;border:none;padding:0;flex-shrink:0;}
-.dot.active{background:var(--gold);width:16px;border-radius:2px;}
-.pause-ind{position:absolute;top:18px;left:50%;transform:translateX(-50%);z-index:5;background:rgba(10,20,12,0.65);border:1px solid rgba(212,168,67,0.3);color:var(--gold);padding:4px 12px;border-radius:20px;font-size:10px;letter-spacing:2px;text-transform:uppercase;opacity:0;transition:opacity 0.3s;pointer-events:none;}
-.pause-ind.show{opacity:1;}
-.prog{position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(255,255,255,0.07);z-index:4;}
-.prog-bar{height:100%;background:var(--gold);width:0%;}
-.prog-bar.run{transition:width linear;}
-.scroll-hint{position:absolute;bottom:46px;left:22px;z-index:4;cursor:pointer;}
-.sh-t{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(245,237,216,0.5);text-shadow:0 1px 4px rgba(0,0,0,0.8);}
+/* Gradient overlays for caption legibility */
+.vignette{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 30%, transparent 50%),
+    linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 20%);
+}
 
-.kb-body{background:var(--cream);color:var(--gd);width:100%;overflow-x:hidden;}
-.kb-sec{padding:32px 20px;border-bottom:1px solid var(--sep);}
-@media(min-width:600px){.kb-sec{padding:44px 52px;}}
+/* Caption */
+.caption{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:20px 22px 52px;
+  z-index:2;
+}
+.sname{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;color:var(--gold);font-weight:500;
+  text-shadow:0 1px 6px rgba(0,0,0,0.9);
+  margin-bottom:4px;
+}
+.scap{
+  font-family:'Caveat',cursive;
+  font-size:24px;color:#fff;line-height:1.3;
+  text-shadow:0 1px 8px rgba(0,0,0,0.95);
+}
+
+/* Header */
+.hdr{
+  position:absolute;top:0;left:0;right:0;
+  padding:16px 22px;z-index:2;
+  display:flex;justify-content:space-between;align-items:flex-start;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.45) 0%,transparent 100%);
+}
+.hdr-school{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.75);font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,0.8);}
+.hdr-name{font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(255,255,255,0.85);margin-top:2px;text-shadow:0 1px 4px rgba(0,0,0,0.8);}
+.hdr-ctr{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.7);letter-spacing:2px;text-shadow:0 1px 4px rgba(0,0,0,0.8);white-space:nowrap;}
+
+/* Save button */
+.dl-btn{
+  position:absolute;bottom:52px;right:18px;z-index:3;
+  background:rgba(0,0,0,0.55);border:1px solid rgba(212,168,67,0.45);
+  color:var(--gold);padding:7px 14px;border-radius:20px;
+  font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;
+  text-decoration:none;backdrop-filter:blur(6px);
+  opacity:0;transition:opacity 0.3s;
+}
+.slide.active .dl-btn{opacity:1;}
+
+/* Nav arrows */
+.nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  z-index:3;background:rgba(0,0,0,0.4);
+  border:1px solid rgba(212,168,67,0.25);
+  color:var(--gold);width:42px;height:42px;border-radius:50%;
+  cursor:pointer;font-size:18px;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(4px);
+}
+.nav:active{background:rgba(212,168,67,0.2);}
+.nav-l{left:14px;}.nav-r{right:14px;}
+
+/* Dots */
+.dots{
+  position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+  display:flex;gap:4px;z-index:3;flex-wrap:wrap;
+  justify-content:center;max-width:80vw;
+}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.25);cursor:pointer;border:none;padding:0;transition:all 0.3s;flex-shrink:0;}
+.dot.active{background:var(--gold);width:16px;border-radius:2px;}
+
+/* Pause */
+.paused-badge{
+  position:absolute;top:16px;left:50%;transform:translateX(-50%);
+  z-index:4;background:rgba(0,0,0,0.6);
+  border:1px solid rgba(212,168,67,0.3);color:var(--gold);
+  padding:4px 12px;border-radius:20px;
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  opacity:0;transition:opacity 0.3s;pointer-events:none;
+}
+.paused-badge.show{opacity:1;}
+
+/* Progress */
+.prog{position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(255,255,255,0.08);z-index:3;}
+.prog-fill{height:100%;background:var(--gold);width:0%;}
+.prog-fill.run{transition:width linear;}
+
+/* Scroll hint */
+.scroll-hint{
+  position:absolute;bottom:44px;left:22px;z-index:3;cursor:pointer;
+  font-size:8px;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,0.45);text-shadow:0 1px 4px rgba(0,0,0,0.8);
+}
+
+/* ── DATA SECTIONS ── */
+.body{background:var(--cream);color:var(--gd);overflow-x:hidden;}
+.sec{padding:32px 20px;border-bottom:1px solid var(--sep);}
+@media(min-width:600px){.sec{padding:44px 52px;}}
 .ey{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--ga);font-weight:600;margin-bottom:5px;}
-.st{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gd);font-weight:600;margin-bottom:18px;padding-bottom:10px;border-bottom:1.5px solid var(--sep);line-height:1.2;}
-.sr{display:flex;flex-wrap:wrap;}
-.sv{flex:1;min-width:70px;text-align:center;padding:12px 6px;border-right:1px solid var(--sep);}
+.st{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gd);font-weight:600;margin-bottom:18px;padding-bottom:10px;border-bottom:1.5px solid var(--sep);}
+.stats{display:flex;flex-wrap:wrap;}
+.sv{flex:1;min-width:68px;text-align:center;padding:12px 6px;border-right:1px solid var(--sep);}
 .sv:last-child{border-right:none;}
-.sn{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--gold);font-weight:600;line-height:1;}
+.sn{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--gold);font-weight:600;line-height:1;}
 .sl{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(14,31,20,0.42);margin-top:3px;}
 .tc{display:grid;grid-template-columns:1fr;gap:24px;}
 @media(min-width:600px){.tc{grid-template-columns:1fr 1fr;gap:32px;}}
-.trivia-intro{background:var(--gd);border-radius:10px;padding:16px 20px;margin-bottom:18px;}
-.tri-stats{display:flex;gap:16px;flex-wrap:wrap;}
-.tri-stat{text-align:center;}
-.tri-stat-n{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold);font-weight:600;line-height:1;}
-.tri-stat-l{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--cdim);margin-top:2px;}
-.tri-note{font-family:'Caveat',cursive;font-size:17px;color:var(--cdim);line-height:1.5;margin-top:12px;border-top:1px solid rgba(212,168,67,0.15);padding-top:10px;}
-.tri-note em{color:var(--gold);font-style:normal;}
-.featured-qs{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+.tbox{background:var(--gd);border-radius:10px;padding:16px 18px;margin-bottom:16px;}
+.tstats{display:flex;gap:14px;flex-wrap:wrap;}
+.ts-n{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gold);font-weight:600;line-height:1;}
+.ts-l{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--cdim);margin-top:2px;}
+.tnote{font-family:'Caveat',cursive;font-size:16px;color:var(--cdim);line-height:1.5;margin-top:10px;border-top:1px solid rgba(212,168,67,0.15);padding-top:10px;}
+.tnote em{color:var(--gold);font-style:normal;}
+.fqs{display:flex;flex-direction:column;gap:8px;}
 .fq{background:rgba(14,31,20,0.05);border-left:3px solid var(--sep);border-radius:0 7px 7px 0;padding:10px 14px;}
-.fq.got-wrong{border-left-color:var(--gold);background:rgba(212,168,67,0.06);}
-.fq-q{font-size:11px;font-weight:600;color:var(--gd);margin-bottom:4px;line-height:1.4;}
+.fq.hl{border-left-color:var(--gold);background:rgba(212,168,67,0.06);}
+.fq-q{font-size:11px;font-weight:600;color:var(--gd);margin-bottom:3px;line-height:1.4;}
 .fq-a{font-size:11px;color:var(--ga);font-weight:600;}
-.fq-note{font-family:'Caveat',cursive;font-size:14px;color:rgba(14,31,20,0.5);margin-top:3px;}
-.lb-wrap{display:flex;flex-direction:column;gap:3px;}
+.fq-n{font-family:'Caveat',cursive;font-size:14px;color:rgba(14,31,20,0.5);margin-top:2px;}
+.lbs{display:flex;flex-direction:column;gap:3px;}
 .lr{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:5px;background:rgba(14,31,20,0.04);}
 .lr.g{background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.2);}
 .lr.s{background:rgba(14,31,20,0.06);}
@@ -94,16 +172,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--gd);color:var(--cream);ov
 .pred::before{content:'\201C';position:absolute;top:-12px;left:7px;font-family:'Cormorant Garamond',serif;font-size:68px;color:rgba(212,168,67,0.1);line-height:1;}
 .pt{font-family:'Caveat',cursive;font-size:18px;color:var(--cream);line-height:1.4;position:relative;z-index:1;margin-bottom:6px;}
 .pf{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;}
-.rem-block{background:var(--gd);border-radius:11px;padding:24px 20px;}
+.rem{background:var(--gd);border-radius:10px;padding:22px 18px;}
 .rq{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--cream);text-align:center;line-height:1.7;margin-bottom:20px;}
-.rem-people{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
-.rem-person{text-align:center;width:80px;}
-.rem-circle-photo{width:64px;height:64px;border-radius:50%;overflow:hidden;margin:0 auto 7px;border:2px solid rgba(212,168,67,0.35);}
+.rp{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+.rpe{text-align:center;width:78px;}
+.rem-circle-photo{width:62px;height:62px;border-radius:50%;overflow:hidden;margin:0 auto 6px;border:2px solid rgba(212,168,67,0.35);}
 .rem-circle-photo img{width:100%;height:100%;object-fit:cover;object-position:center 15%;}
 .rem-name{font-size:10px;color:var(--gold);font-weight:600;line-height:1.4;}
-.rem-sub{font-size:8px;color:rgba(245,237,216,0.3);letter-spacing:0.5px;margin-top:1px;line-height:1.4;}
-.kb-footer{background:var(--gm);padding:18px 20px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--sep);flex-wrap:wrap;gap:8px;}
-@media(min-width:600px){.kb-footer{padding:18px 52px;}}
+.rem-sub{font-size:8px;color:rgba(245,237,216,0.3);margin-top:1px;line-height:1.4;}
+.footer{background:var(--gm);padding:18px 20px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--sep);flex-wrap:wrap;gap:8px;}
+@media(min-width:600px){.footer{padding:18px 52px;}}
 .fl{font-size:10px;color:rgba(245,237,216,0.28);letter-spacing:1px;}
 .fc{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:rgba(245,237,216,0.4);}
 .fr{font-size:10px;color:rgba(212,168,67,0.38);letter-spacing:1px;text-align:right;}
@@ -112,198 +190,173 @@ body{font-family:'DM Sans',sans-serif;background:var(--gd);color:var(--cream);ov
 <body>
 
 <div class="loader" id="loader">
-  <div class="loader-ring"></div>
+  <div class="ring"></div>
   <div class="loader-name">Payton Garrity &middot; Class of 2026</div>
-  <div class="loader-text">Loading memories&hellip;</div>
+  <div class="loader-sub">Loading memories&hellip;</div>
 </div>
 
-<div class="slideshow" id="ss">
-  <div class="shdr">
+<div class="ss" id="ss">
+  <div class="hdr">
     <div>
-      <div class="school">Excelsior Classical Academy &middot; Flying Lions</div>
-      <div class="htitle">Payton Garrity &middot; Class of 2026</div>
+      <div class="hdr-school">Excelsior Classical Academy &middot; Flying Lions</div>
+      <div class="hdr-name">Payton Garrity &middot; Class of 2026</div>
     </div>
-    <div class="sctr" id="ctr">1 / 23</div>
+    <div class="hdr-ctr" id="ctr">1 / 23</div>
   </div>
 
-<div class="slide active" data-idx="0" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333518053.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333518053.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333518053.jpeg?width=1200&quality=80" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333518053.jpeg?width=1200&quality=80" alt="Mom" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Mom</div></div>
+<div class="slide active" data-idx="0">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333518053.jpeg?width=1200&quality=80" alt="Mom" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Mom</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333518053.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="1" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333539338.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333539338.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333539338.jpeg?width=1200&quality=80" alt="Mom" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Mom</div></div>
+<div class="slide" data-idx="1">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333539338.jpeg?width=1200&quality=80" alt="Mom" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Mom</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333539338.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="2" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333564931.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333564931.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333564931.jpeg?width=1200&quality=80" alt="Dad" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Dad</div><div class="scap">So proud of you!</div></div>
+<div class="slide" data-idx="2">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333564931.jpeg?width=1200&quality=80" alt="Dad" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Dad</div><div class="scap">So proud of you!</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333564931.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="3" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333589698.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333589698.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333589698.jpeg?width=1200&quality=80" alt="Dad" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Dad</div></div>
+<div class="slide" data-idx="3">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333589698.jpeg?width=1200&quality=80" alt="Dad" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Dad</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333589698.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="4" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333609551.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333609551.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333609551.jpeg?width=1200&quality=80" alt="Mom" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Mom</div></div>
+<div class="slide" data-idx="4">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333609551.jpeg?width=1200&quality=80" alt="Mom" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Mom</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333609551.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="5" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333630999.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333630999.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333630999.jpeg?width=1200&quality=80" alt="Mom" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Mom</div></div>
+<div class="slide" data-idx="5">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333630999.jpeg?width=1200&quality=80" alt="Mom" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Mom</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333630999.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="6" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333670878.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333670878.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333670878.jpeg?width=1200&quality=80" alt="Mom" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Mom</div></div>
+<div class="slide" data-idx="6">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333670878.jpeg?width=1200&quality=80" alt="Mom" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Mom</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333670878.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="7" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333807084.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333807084.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333807084.jpeg?width=1200&quality=80" alt="Mom" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Mom</div><div class="scap">We love you!</div></div>
+<div class="slide" data-idx="7">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333807084.jpeg?width=1200&quality=80" alt="Mom" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Mom</div><div class="scap">We love you!</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333807084.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="8" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333896803.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333896803.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333896803.jpeg?width=1200&quality=80" alt="Mom" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Mom</div></div>
+<div class="slide" data-idx="8">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333896803.jpeg?width=1200&quality=80" alt="Mom" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Mom</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333896803.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="9" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780159716556.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780159716556.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780159716556.jpeg?width=1200&quality=80" alt="Auntie Megan" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Auntie Megan</div><div class="scap">Congratulations Payton!!</div></div>
+<div class="slide" data-idx="9">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780159716556.jpeg?width=1200&quality=80" alt="Auntie Megan" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Auntie Megan</div><div class="scap">Congratulations Payton!!</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780159716556.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="10" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780160567470.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780160567470.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780160567470.jpeg?width=1200&quality=80" alt="Uncle Shane" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Uncle Shane</div><div class="scap">Still your number 1 Uncle</div></div>
+<div class="slide" data-idx="10">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780160567470.jpeg?width=1200&quality=80" alt="Uncle Shane" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Uncle Shane</div><div class="scap">Still your number 1 Uncle</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780160567470.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="11" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780161239817.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780161239817.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780161239817.jpeg?width=1200&quality=80" alt="Mom" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Mom</div></div>
+<div class="slide" data-idx="11">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780161239817.jpeg?width=1200&quality=80" alt="Mom" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Mom</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780161239817.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="12" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780163949732.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780163949732.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780163949732.jpeg?width=1200&quality=80" alt="Aunt Misty" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Aunt Misty</div><div class="scap">Congratulations Payton!</div></div>
+<div class="slide" data-idx="12">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780163949732.jpeg?width=1200&quality=80" alt="Aunt Misty" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Aunt Misty</div><div class="scap">Congratulations Payton!</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780163949732.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="13" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169477938.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169477938.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169477938.jpeg?width=1200&quality=80" alt="Aunt Misty" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Aunt Misty</div><div class="scap">Congratulations Payton!</div></div>
+<div class="slide" data-idx="13">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169477938.jpeg?width=1200&quality=80" alt="Aunt Misty" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Aunt Misty</div><div class="scap">Congratulations Payton!</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169477938.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="14" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169541043.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169541043.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169541043.jpeg?width=1200&quality=80" alt="Mom" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Mom</div><div class="scap">I love you!</div></div>
+<div class="slide" data-idx="14">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169541043.jpeg?width=1200&quality=80" alt="Mom" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Mom</div><div class="scap">I love you!</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169541043.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="15" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169580749.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169580749.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169580749.jpeg?width=1200&quality=80" alt="Mom & Dad" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Mom & Dad</div><div class="scap">We love you!</div></div>
+<div class="slide" data-idx="15">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169580749.jpeg?width=1200&quality=80" alt="Mom & Dad" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Mom & Dad</div><div class="scap">We love you!</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169580749.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="16" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780170843461.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780170843461.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780170843461.jpeg?width=1200&quality=80" alt="Graduation 2026" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Graduation 2026</div><div class="scap">Congratulations Payton!</div></div>
+<div class="slide" data-idx="16">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780170843461.jpeg?width=1200&quality=80" alt="Graduation 2026" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Graduation 2026</div><div class="scap">Congratulations Payton!</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780170843461.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="17" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780170883285.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780170883285.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780170883285.jpeg?width=1200&quality=80" alt="Graduation 2026" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Graduation 2026</div><div class="scap">Congratulations Payton!</div></div>
+<div class="slide" data-idx="17">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780170883285.jpeg?width=1200&quality=80" alt="Graduation 2026" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Graduation 2026</div><div class="scap">Congratulations Payton!</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780170883285.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="18" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171116148.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171116148.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171116148.jpeg?width=1200&quality=80" alt="The Garritys" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">The Garritys</div><div class="scap">Congratulations Payton!</div></div>
+<div class="slide" data-idx="18">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171116148.jpeg?width=1200&quality=80" alt="The Garritys" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">The Garritys</div><div class="scap">Congratulations Payton!</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171116148.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="19" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171464647.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171464647.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171464647.jpeg?width=1200&quality=80" alt="Auntie Megan" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Auntie Megan</div><div class="scap">So proud of you!</div></div>
+<div class="slide" data-idx="19">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171464647.jpeg?width=1200&quality=80" alt="Auntie Megan" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Auntie Megan</div><div class="scap">So proud of you!</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171464647.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="20" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171740524.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171740524.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171740524.jpeg?width=1200&quality=80" alt="Grandpa" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Grandpa</div><div class="scap">Graduation</div></div>
+<div class="slide" data-idx="20">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171740524.jpeg?width=1200&quality=80" alt="Grandpa" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Grandpa</div><div class="scap">Graduation</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171740524.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="21" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171812530.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171812530.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171812530.jpeg?width=1200&quality=80" alt="Grandpa" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Grandpa</div><div class="scap">Congratulations</div></div>
+<div class="slide" data-idx="21">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171812530.jpeg?width=1200&quality=80" alt="Grandpa" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Grandpa</div><div class="scap">Congratulations</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171812530.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
-<div class="slide" data-idx="22" data-url="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780174316139.jpeg?width=1200&quality=80">
-  <div class="sblur" style="background-image:url('https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780174316139.jpeg?width=1200&quality=80')"></div>
-  <img class="simg" src="" data-src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780174316139.jpeg?width=1200&quality=80" alt="Cousins" />
-  <div class="svignette"></div>
-  <div class="scaption"><div class="sname">Cousins</div></div>
+<div class="slide" data-idx="22">
+  <img class="simg" src="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780174316139.jpeg?width=1200&quality=80" alt="Cousins" />
+  <div class="vignette"></div>
+  <div class="caption"><div class="sname">Cousins</div></div>
   <a class="dl-btn" href="https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780174316139.jpeg?width=1200&quality=80" target="_blank" rel="noopener">&#8681; Save Photo</a>
 </div>
 
 
-  <button class="nav-btn nav-prev" onclick="go(-1)">&#8592;</button>
-  <button class="nav-btn nav-next" onclick="go(1)">&#8594;</button>
+  <button class="nav nav-l" onclick="go(-1)">&#8592;</button>
+  <button class="nav nav-r" onclick="go(1)">&#8594;</button>
   <div class="dots" id="dots"><div class="dot  active" data-idx="0"></div><div class="dot" data-idx="1"></div><div class="dot" data-idx="2"></div><div class="dot" data-idx="3"></div><div class="dot" data-idx="4"></div><div class="dot" data-idx="5"></div><div class="dot" data-idx="6"></div><div class="dot" data-idx="7"></div><div class="dot" data-idx="8"></div><div class="dot" data-idx="9"></div><div class="dot" data-idx="10"></div><div class="dot" data-idx="11"></div><div class="dot" data-idx="12"></div><div class="dot" data-idx="13"></div><div class="dot" data-idx="14"></div><div class="dot" data-idx="15"></div><div class="dot" data-idx="16"></div><div class="dot" data-idx="17"></div><div class="dot" data-idx="18"></div><div class="dot" data-idx="19"></div><div class="dot" data-idx="20"></div><div class="dot" data-idx="21"></div><div class="dot" data-idx="22"></div></div>
-  <div class="pause-ind" id="pi">Paused</div>
-  <div class="prog"><div class="prog-bar" id="pb"></div></div>
-  <div class="scroll-hint" onclick="document.querySelector('.kb-body').scrollIntoView({behavior:'smooth'})">
-    <div class="sh-t">&#8595; Scroll for the full story</div>
-  </div>
+  <div class="paused-badge" id="pb2">Paused</div>
+  <div class="prog"><div class="prog-fill" id="pf"></div></div>
+  <div class="scroll-hint" onclick="document.querySelector('.body').scrollIntoView({behavior:'smooth'})">&#8595; Scroll for the full story</div>
 </div>
 
-<div class="kb-body">
-  <div class="kb-sec">
+<div class="body">
+  <div class="sec">
     <div class="ey">May 30, 2026 &middot; Durham, North Carolina</div>
     <div class="st">The Party by the Numbers</div>
-    <div class="sr">
+    <div class="stats">
       <div class="sv"><div class="sn">122</div><div class="sl">Photos Shared</div></div>
       <div class="sv"><div class="sn">21</div><div class="sl">Trivia Players</div></div>
       <div class="sv"><div class="sn">70%</div><div class="sl">Participation</div></div>
@@ -311,31 +364,29 @@ body{font-family:'DM Sans',sans-serif;background:var(--gd);color:var(--cream);ov
       <div class="sv"><div class="sn">9.1</div><div class="sl">Avg Score</div></div>
     </div>
   </div>
-  <div class="kb-sec">
+  <div class="sec">
     <div class="ey">How Well Do You Know Payton?</div>
     <div class="st">The Trivia Experience</div>
     <div class="tc">
       <div>
-        <div class="trivia-intro">
-          <div class="tri-stats">
-            <div class="tri-stat"><div class="tri-stat-n">21</div><div class="tri-stat-l">Players</div></div>
-            <div class="tri-stat"><div class="tri-stat-n">2</div><div class="tri-stat-l">Perfect 15/15</div></div>
-            <div class="tri-stat"><div class="tri-stat-n">9.1</div><div class="tri-stat-l">Avg Score</div></div>
-            <div class="tri-stat"><div class="tri-stat-n">3</div><div class="tri-stat-l">Tiers</div></div>
+        <div class="tbox">
+          <div class="tstats">
+            <div><div class="ts-n">21</div><div class="ts-l">Players</div></div>
+            <div><div class="ts-n">2</div><div class="ts-l">Perfect 15/15</div></div>
+            <div><div class="ts-n">9.1</div><div class="ts-l">Avg Score</div></div>
           </div>
-          <div class="tri-note">Payton wrote the questions himself &mdash; and it showed. The Hard tier exposed everyone. <em>Even family.</em></div>
+          <div class="tnote">Payton wrote the questions himself &mdash; the Hard tier exposed everyone. <em>Even family.</em></div>
         </div>
-        <div class="ey" style="margin-bottom:8px;">Featured Questions</div>
-        <div class="featured-qs">
-          <div class="fq"><div class="fq-q">&#x1F7E2; Easy &mdash; What school did Payton graduate from?</div><div class="fq-a">&#10003; Excelsior Classical Academy</div><div class="fq-note">Almost everyone got this one.</div></div>
-          <div class="fq got-wrong"><div class="fq-q">&#x1F534; Hard &mdash; What was Payton&rsquo;s FIRST obsession &mdash; before FNAF?</div><div class="fq-a">&#10003; Thomas the Tank Engine</div><div class="fq-note">"Angry Birds!" kept coming up all night. The room was convinced. They were wrong.</div></div>
-          <div class="fq got-wrong"><div class="fq-q">&#x1F534; Hard &mdash; What was Payton&rsquo;s first pet?</div><div class="fq-a">&#10003; Pet Fish</div><div class="fq-note">Almost nobody gets this. Everyone guesses dog. Ruby came later.</div></div>
-          <div class="fq"><div class="fq-q">&#x1F7E1; Medium &mdash; What country has Payton NOT been to?</div><div class="fq-a">&#10003; United Kingdom</div><div class="fq-note">France, Greece, Mexico are all real. UK was the trap.</div></div>
+        <div class="fqs">
+          <div class="fq"><div class="fq-q">&#x1F7E2; Easy &mdash; What school did Payton graduate from?</div><div class="fq-a">&#10003; Excelsior Classical Academy</div><div class="fq-n">Almost everyone got this one.</div></div>
+          <div class="fq hl"><div class="fq-q">&#x1F534; Hard &mdash; What was Payton&rsquo;s FIRST obsession before FNAF?</div><div class="fq-a">&#10003; Thomas the Tank Engine</div><div class="fq-n">"Angry Birds!" all night. Wrong.</div></div>
+          <div class="fq hl"><div class="fq-q">&#x1F534; Hard &mdash; What was Payton&rsquo;s first pet?</div><div class="fq-a">&#10003; Pet Fish</div><div class="fq-n">Everyone guesses dog. Ruby came later.</div></div>
+          <div class="fq"><div class="fq-q">&#x1F7E1; Medium &mdash; Country Payton has NOT been to?</div><div class="fq-a">&#10003; United Kingdom</div><div class="fq-n">France, Greece, Mexico are all real.</div></div>
         </div>
       </div>
       <div>
         <div class="ey" style="margin-bottom:8px;">Final Leaderboard</div>
-        <div class="lb-wrap">
+        <div class="lbs">
           <div class="lr g"><div class="lm">&#x1F3C6;</div><div class="ln">Payton</div><div class="lbw"><div class="lbf" style="width:100%"></div></div><div class="ls">15/15</div></div>
           <div class="lr g"><div class="lm">&#x1F3C6;</div><div class="ln">Dad</div><div class="lbw"><div class="lbf" style="width:100%"></div></div><div class="ls">15/15</div></div>
           <div class="lr s"><div class="lm">&#x1F948;</div><div class="ln">Grandpa</div><div class="lbw"><div class="lbf" style="width:80%"></div></div><div class="ls">12/15</div></div>
@@ -361,20 +412,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--gd);color:var(--cream);ov
       </div>
     </div>
   </div>
-  <div class="kb-sec">
+  <div class="sec">
     <div class="ey">Where Do You See Payton in 5 Years?</div>
     <div class="st">Predictions</div>
     <div class="pred"><div class="pt">"Creating and coding his own history themed video game (that will make him millions $)!"</div><div class="pf">Jenna P</div></div>
     <div class="pred"><div class="pt">"Creating and managing his own Division of family owned business"</div><div class="pf">Grandpa</div></div>
     <div class="pred"><div class="pt">"Working with dad while also coding his own gaming system &#x1F3AE;"</div><div class="pf">Auntie Megan</div></div>
   </div>
-  <div class="kb-sec">
+  <div class="sec">
     <div class="ey">Always With Us</div>
     <div class="st">In Their Memory</div>
-    <div class="rem-block">
+    <div class="rem">
       <div class="rq">&ldquo;When Payton started this chapter, they were all here cheering him on.<br>They still are &mdash; just from somewhere we can&rsquo;t see yet.&rdquo;</div>
-      <div class="rem-people"><div class="rem-person">
-  <div class="rem-circle-photo"><img src="data:image/jpeg;base64,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" alt="Grandma Denise" style="transform:rotate(90deg);object-position:center;" /></div>
+      <div class="rp"><div class="rem-person">
+  <div class="rem-circle-photo"><img src="data:image/jpeg;base64,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" alt="Grandma Denise" /></div>
   <div class="rem-name">Grandma Denise</div>
   <div class="rem-sub">Garrity</div>
 </div>
@@ -397,7 +448,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--gd);color:var(--cream);ov
   </div>
 </div>
 
-<div class="kb-footer">
+<div class="footer">
   <div class="fl">Bill &amp; Jodi Garrity &middot; Durham, NC</div>
   <div class="fc">He made it. Let&rsquo;s celebrate. &#x1F393;</div>
   <div class="fr">Powered by ClubOS<br>clubhousectv.com</div>
@@ -406,95 +457,88 @@ body{font-family:'DM Sans',sans-serif;background:var(--gd);color:var(--cream);ov
 <script>
 const TOTAL = 23;
 const URLS = ["https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333518053.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333539338.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333564931.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333589698.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333609551.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333630999.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333670878.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333807084.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780333896803.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780159716556.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780160567470.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780161239817.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780163949732.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169477938.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169541043.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780169580749.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780170843461.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780170883285.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171116148.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171464647.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171740524.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780171812530.jpeg?width=1200&quality=80", "https://ykfvwqewnfnibpzytspn.supabase.co/storage/v1/render/image/public/graduation-photos/payton-2026/1780174316139.jpeg?width=1200&quality=80"];
-let cur = 0, paused = false, timer = null;
 const DURATION = 9000;
+let cur = 0, paused = false, timer = null;
+
 const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
-const ctr = document.getElementById('ctr');
-const pb = document.getElementById('pb');
-const pi = document.getElementById('pi');
+const dots   = document.querySelectorAll('.dot');
+const ctr    = document.getElementById('ctr');
+const pf     = document.getElementById('pf');
+const pb2    = document.getElementById('pb2');
 const loader = document.getElementById('loader');
 
-function loadSlide(idx) {
-  const img = slides[idx].querySelector('.simg');
-  if (img && !img.src) img.src = img.dataset.src;
+// Wait for first image then reveal
+const firstImg = slides[0].querySelector('.simg');
+function reveal() {
+  loader.classList.add('gone');
+  setTimeout(()=>loader.style.display='none', 600);
+  startProgress();
+  startTimer();
 }
-
-function preloadFirst() {
-  const img = slides[0].querySelector('.simg');
-  img.onload = function() {
-    loader.classList.add('hidden');
-    setTimeout(() => loader.style.display='none', 700);
-    startProg(); startTimer();
-    for(let i=1;i<Math.min(4,TOTAL);i++) loadSlide(i);
-  };
-  img.onerror = function() {
-    loader.classList.add('hidden');
-    setTimeout(() => loader.style.display='none', 700);
-    startProg(); startTimer();
-  };
-  if (img.complete && img.naturalWidth) {
-    loader.classList.add('hidden');
-    setTimeout(() => loader.style.display='none', 700);
-    startProg(); startTimer();
-  }
+if (firstImg.complete && firstImg.naturalHeight > 0) {
+  reveal();
+} else {
+  firstImg.addEventListener('load', reveal);
+  firstImg.addEventListener('error', reveal);
 }
 
 function showSlide(n) {
   slides[cur].classList.remove('active');
   dots[cur].classList.remove('active');
-  // Free memory for distant slides
-  slides.forEach((s,i) => {
-    const dist = Math.min(Math.abs(i-cur), TOTAL-Math.abs(i-cur));
-    if (dist > 5) {
-      const img = s.querySelector('.simg');
-      if (img) img.src = '';
-    }
-  });
   cur = (n + TOTAL) % TOTAL;
-  // Load current + neighbors
-  [cur,(cur+1)%TOTAL,(cur+2)%TOTAL,(cur-1+TOTAL)%TOTAL].forEach(loadSlide);
   slides[cur].classList.add('active');
   dots[cur].classList.add('active');
-  ctr.textContent = (cur+1) + ' / ' + TOTAL;
-  startProg();
+  ctr.textContent = (cur + 1) + ' / ' + TOTAL;
+  startProgress();
 }
 
-function startProg() {
-  pb.classList.remove('run');
-  pb.style.transition='none'; pb.style.width='0%';
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    pb.classList.add('run');
-    pb.style.transition='width '+DURATION+'ms linear';
-    pb.style.width='100%';
+function startProgress() {
+  pf.style.transition = 'none';
+  pf.style.width = '0%';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    pf.style.transition = 'width ' + DURATION + 'ms linear';
+    pf.style.width = '100%';
   }));
 }
-function startTimer() {
-  if(timer) clearInterval(timer);
-  timer=setInterval(()=>{if(!paused) showSlide(cur+1);},DURATION);
-}
-function go(d){showSlide(cur+d);if(!paused)startTimer();}
 
-document.getElementById('ss').addEventListener('click',e=>{
-  if(e.target.closest('.nav-btn,.dots,.scroll-hint,.dl-btn')) return;
-  paused=!paused; pi.classList.toggle('show',paused);
-  if(!paused) startTimer();
+function startTimer() {
+  if (timer) clearInterval(timer);
+  timer = setInterval(() => { if (!paused) showSlide(cur + 1); }, DURATION);
+}
+
+function go(d) { showSlide(cur + d); if (!paused) startTimer(); }
+
+// Click to pause/resume
+document.getElementById('ss').addEventListener('click', e => {
+  if (e.target.closest('.nav,.dots,.scroll-hint,.dl-btn')) return;
+  paused = !paused;
+  pb2.classList.toggle('show', paused);
+  if (!paused) startTimer();
 });
-dots.forEach((d,i)=>d.addEventListener('click',e=>{
-  e.stopPropagation(); showSlide(i); if(!paused) startTimer();
+
+// Dot navigation
+dots.forEach((d, i) => d.addEventListener('click', e => {
+  e.stopPropagation();
+  showSlide(i);
+  if (!paused) startTimer();
 }));
-document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight') go(1);
-  if(e.key==='ArrowLeft') go(-1);
-  if(e.key===' '){e.preventDefault();paused=!paused;pi.classList.toggle('show',paused);if(!paused)startTimer();}
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') go(1);
+  if (e.key === 'ArrowLeft')  go(-1);
+  if (e.key === ' ') { e.preventDefault(); paused = !paused; pb2.classList.toggle('show', paused); if (!paused) startTimer(); }
 });
-let tx=0;
-document.getElementById('ss').addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
-document.getElementById('ss').addEventListener('touchend',e=>{
-  const dx=e.changedTouches[0].clientX-tx;
-  if(Math.abs(dx)>50){go(dx<0?1:-1);if(!paused)startTimer();}
+
+// Swipe
+let tx = 0;
+document.getElementById('ss').addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
+document.getElementById('ss').addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 50) { go(dx < 0 ? 1 : -1); if (!paused) startTimer(); }
 });
-preloadFirst();
+
+startTimer();
 </script>
 </body>
 </html>
